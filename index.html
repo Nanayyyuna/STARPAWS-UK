@@ -754,11 +754,11 @@
                 <h3 style="color: var(--primary-color); margin-bottom: 20px;">Make a Donation</h3>
                 <p style="margin-bottom: 30px;">Every contribution, no matter how small, makes a difference in an animal's life.</p>
                 <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px;">
-                    <button class="btn" style="background-color: var(--primary-color);">£10</button>
-                    <button class="btn" style="background-color: var(--primary-color);">£25</button>
-                    <button class="btn" style="background-color: var(--primary-color);">£50</button>
-                    <button class="btn" style="background-color: var(--primary-color);">£100</button>
-                    <button class="btn" style="background-color: var(--secondary-color);">Other Amount</button>
+                    <button class="btn" style="background-color: var(--primary-color);" onclick="donate(10)">£10</button>
+                    <button class="btn" style="background-color: var(--primary-color);" onclick="donate(25)">£25</button>
+                    <button class="btn" style="background-color: var(--primary-color);" onclick="donate(50)">£50</button>
+                    <button class="btn" style="background-color: var(--primary-color);" onclick="donate(100)">£100</button>
+                    <button class="btn" style="background-color: var(--secondary-color);" onclick="customDonate()">Other Amount</button>
                 </div>
                 <p style="font-size: 0.9rem; color: var(--gray-color);">Donations are processed securely. StarPaws UK is a registered charity (No. 1234567).</p>
             </div>
@@ -859,20 +859,19 @@
             }
         });
         
-        // Donation buttons
-        document.querySelectorAll('#donate button').forEach(button => {
-            button.addEventListener('click', function() {
-                const amount = this.textContent;
-                if(amount === 'Other Amount') {
-                    const customAmount = prompt('Enter donation amount (£):');
-                    if(customAmount && !isNaN(customAmount)) {
-                        alert(`Thank you for your donation of £${customAmount}! This will help us save more animals.`);
-                    }
-                } else {
-                    alert(`Thank you for your donation of ${amount}! This will help us save more animals.`);
-                }
-            });
-        });
+        // Donation functions
+        function donate(amount) {
+            alert(`Thank you for your donation of £${amount}! This will help us save more animals.`);
+        }
+        
+        function customDonate() {
+            const customAmount = prompt('Enter donation amount (£):');
+            if(customAmount && !isNaN(customAmount) && customAmount > 0) {
+                alert(`Thank you for your donation of £${customAmount}! This will help us save more animals.`);
+            } else if (customAmount) {
+                alert('Please enter a valid amount.');
+            }
+        }
         
         // Highlight active navigation link on scroll
         window.addEventListener('scroll', () => {
@@ -894,6 +893,12 @@
                     link.classList.add('active');
                 }
             });
+        });
+        
+        // Initialize - set active nav on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeLink = document.querySelector('nav a[href="#home"]');
+            if(homeLink) homeLink.classList.add('active');
         });
     </script>
 </body>
